@@ -2,3 +2,7 @@ python==3.8.6
 selenium
 opencv-python
 flask
+pyaudio
+six.moves
+google.cloud
+google.cloud.speech
