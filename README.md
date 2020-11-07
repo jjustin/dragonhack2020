@@ -1,11 +1,12 @@
-# dragonhack2020
+# Totally Listening To You (TLTY.py for short)
 
-Trivial
+## Presented to you by **Trivial Group**
+***
 
-Download driver from [this url](https://chromedriver.chromium.org/),
-check your chrome version before.
+## Features
 
-# Speech to text
+
+## Speech to text
 
 ### Google cloud authentication:
 https://cloud.google.com/docs/authentication/getting-started#windows
@@ -15,11 +16,9 @@ Activate you have to activate your key in the shell the project is running in wi
 set GOOGLE_APPLICATION_CREDENTIALS=C:/Users/Frenk/auth/trivial-dh-2020-c45bdf0254cc.json
 ```
 
-## Requires
+## Requirements
 Download driver from [this url](https://chromedriver.chromium.org/),
 check your chrome version before.
-
-- ffmpeg
 
 https://vb-audio.com/Cable/
 
@@ -29,4 +28,4 @@ Then check the device index of stereo mix (there is a tool in speect_to_text.py)
 and set it in speech_stream_to_text.pi as a global variable.
 
 ### AudioPy
-For some reason, you must build AudioPy from a wheel file, the default pip install does not work.
+For some reason (only on Windows), you must build AudioPy from a wheel file, the default pip install does not work.

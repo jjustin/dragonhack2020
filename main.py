@@ -10,16 +10,26 @@ from time import sleep
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
 
-t = threading.Thread(target=cam.start)
-t.start()
+
 
 def main():
-    keywords = ['people', 'efforts', 'election']
+    # Browser manipulation settings
+    url = input("Paste Zoom URL:\n")
+    driver = webdriver.Chrome('./chromedriver')
+    driver.get(url)
+    input('Continue?')
+
+    # Speech to text recognition thread and settings
+    keywords = ['Martin', 'Quiz', 'Dragonhack']
     keyword_used = {k: False for k in keywords}
     keywords = [s.lower() for s in keywords]
     speech_to_text = SpeechStream(RATE, CHUNK, keywords)
     speech_to_text_worker = threading.Thread(target=speech_to_text.code_driver)
     speech_to_text_worker.start()
+
+    # Video feed thread
+    t = threading.Thread(target=cam.start)
+    t.start()
 
     while True:
         # Keyword recognition for speech to text
@@ -34,6 +44,10 @@ def main():
         elif keyword == 'election' and not keyword_used[keyword]:
             keyword_used[keyword] = True
             print('Hello election')
+
+        # Chat bot integration
+        chat_bot(driver)
+
 
 if __name__ == '__main__':
     main()
