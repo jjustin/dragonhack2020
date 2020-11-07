@@ -13,4 +13,5 @@ Download driver from [this url](https://chromedriver.chromium.org/),
 check your chrome version before.
 
 - ffmpeg
-- [gstreamer](https://gstreamer.freedesktop.org/data/pkg/osx/)
+
+https://vb-audio.com/Cable/

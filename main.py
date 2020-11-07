@@ -1,15 +1,12 @@
+import cam.camout as cam
 import sys
 from selenium import webdriver
 from time import sleep
 from chat_functions import chat_bot
 import threading
-import camout
 
-videoservice = VideoService()
-videoservice.start()
-while True:
-    print(x)
-exit()
+t = threading.Thread(target=cam.start)
+t.start()
 
 driver = webdriver.Chrome('./chromedriver')
 
