@@ -1,5 +1,6 @@
 from selenium.webdriver.common.keys import Keys
 
+sent = []
 
 def repeated_chat(texts, n):
     count = 0
@@ -21,9 +22,8 @@ def chat_bot(driver):
         "//pre[@class=\"chat-item__chat-info-msg\"]")
     chats = [chat.text for chat in chat_elements]
 
-    # already sent chats
-    sent = []
-
+    global sent
+    
     if len(chats) > 0:
         # get the word that repeated specified number of times
         text = repeated_chat(chats, 3)
