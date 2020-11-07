@@ -3,9 +3,12 @@ from selenium.webdriver.common.keys import Keys
 sent = []
 
 def repeated_chat(texts, n):
+    global sent
     count = 0
     all_chats = " ".join(texts)
     for text in texts[-10:]:
+        if text in sent:
+            continue
         count = all_chats.count(text)
         if count >= n:
             return text
