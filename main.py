@@ -1,6 +1,7 @@
 import cam.camout as cam
 import sys
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from chat_functions import chat_bot
 import threading
 from speech_stream_to_text import SpeechStream
@@ -14,9 +15,17 @@ CHUNK = int(RATE / 10)  # 100ms
 
 def main():
     # Browser manipulation settings
-    url = input("Paste Zoom URL:\n")
-    driver = webdriver.Chrome('./chromedriver')
-    driver.get(url)
+    # url = input("Paste Zoom URL:\n")
+    # driver = webdriver.Chrome('./chromedriver')
+    # driver.get(url)    
+
+    chrome_options = Options()
+    chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
+    #Change chrome driver path accordingly
+    chrome_driver = './chromedriver'
+    driver = webdriver.Chrome(chrome_driver, chrome_options=chrome_options)
+    print(driver.title)
+
     input('Continue?')
 
     # Speech to text recognition thread and settings
