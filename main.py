@@ -1,17 +1,16 @@
 import sys
 from selenium import webdriver
 from time import sleep
+from chat_functions import chat_bot
 
 
-zoom_url = "https://uni-lj-si.zoom.us/j/91203158907?pwd=L2VDTjJlMDhuUjRtaUxEQ2tBUVQrdz09"
 driver = webdriver.Chrome('./chromedriver')
 
-driver.get(zoom_url)
-sleep(3)
+url = input("paste zoom url:\n")
+driver.get(url)
 
-driver.find_element_by_link_text("Join from Your Browser").click()
+while True:
+    chat_bot(driver)
 
-
+# text = input("Quit?")
 # driver.quit()
-
-
