@@ -3,3 +3,4 @@
 .vscode
 chromedriver
 *.pyc
+__pycache__
