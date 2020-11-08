@@ -20,7 +20,9 @@ set GOOGLE_APPLICATION_CREDENTIALS=C:/Users/Frenk/auth/trivial-dh-2020-c45bdf025
 Download driver from [this url](https://chromedriver.chromium.org/),
 check your chrome version before.
 
-https://vb-audio.com/Cable/
+- ffmpeg
+- https://vb-audio.com/Cable/
+- OBS
 
 ### Zoom/application sound transcription
 Enable Stereo Mix in windows sound settings.

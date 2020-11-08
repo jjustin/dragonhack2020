@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <video id="video">
+        <source src="test.mp4">
+    </video>
+
+    <script>
+        var video = document.getElementById('video');
+        video.pause()
+        var ws = new WebSocket("ws://localhost:5001")
+        ws.addEventListener("message", () => {
+            console.log("msg")
+            video.play()
+        })
+
+    </script>
+</body>
+
+</html>

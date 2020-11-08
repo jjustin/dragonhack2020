@@ -7,3 +7,5 @@ six.moves
 google.cloud
 google.cloud.speech
 ffmpeg
+pgi
+websockets

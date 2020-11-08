@@ -9,6 +9,7 @@ import time
 
 class MicrophoneStream(object):
     """Opens a recording stream as a generator yielding the audio chunks."""
+
     def __init__(self, rate, chunk):
         self._rate = rate
         self._chunk = chunk
@@ -17,11 +18,11 @@ class MicrophoneStream(object):
         self._buff = queue.Queue()
         self.closed = True
 
-        self.input_device_index = 7
+        self.input_device_index = 2
 
     def __enter__(self):
         self._audio_interface = pyaudio.PyAudio()
-        
+
         for i in range(self._audio_interface.get_device_count()):
             pass
             # print(self._audio_interface.get_device_info_by_index(i))
@@ -32,7 +33,7 @@ class MicrophoneStream(object):
             # https://goo.gl/z757pE
             channels=1, rate=self._rate,
             input=True, frames_per_buffer=self._chunk,
-            input_device_index = self.input_device_index,
+            input_device_index=self.input_device_index,
             # Run the audio stream asynchronously to fill the buffer object.
             # This is necessary so that the input device's buffer doesn't
             # overflow while the calling thread makes network requests, etc.
@@ -80,7 +81,6 @@ class MicrophoneStream(object):
             yield b''.join(data)
 
 
-
 class SpeechStream:
     def __init__(self, rate, chunk, keywords):
         language_code = 'en-US'  # a BCP-47 language tag
@@ -105,7 +105,7 @@ class SpeechStream:
 
     def get_words(self):
         # Returns the last 40 characters of stream
-        return self.stream_array[-40:] if len(self.stream_array) > 0 else ''
+        return self.stream_array[-40:].lower() if len(self.stream_array) > 0 else ''
 
     def listen_print_loop(self):
         num_chars_printed = 0
@@ -132,13 +132,15 @@ class SpeechStream:
             requests = (speech.StreamingRecognizeRequest(audio_content=content)
                         for content in audio_generator)
 
-            self.responses = self.client.streaming_recognize(self.streaming_config, requests)
+            self.responses = self.client.streaming_recognize(
+                self.streaming_config, requests)
             self.listen_print_loop()
 
     def get_keywords(self):
         chars = self.get_words()
         for k in self.keywords:
-            if chars.find(k) > 0:
+            # if chars.find(k) > 0:
+            if k.lower() in chars:
                 self.current_keywords.append(k.lower())
 
     def get_current_keyword(self):
@@ -147,4 +149,4 @@ class SpeechStream:
 
         kword = self.current_keywords[0]
         self.current_keywords.remove(kword)
-        return kword
+        return kword.lower()
