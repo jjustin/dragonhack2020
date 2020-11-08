@@ -30,7 +30,7 @@ def main():
     print(driver.title)
 
     # Speech to text recognition thread and settings
-    keywords = ['martin', 'quiz', 'apple']
+    keywords = ['john', 'smith', 'apple']
     keyword_used = {k: False for k in keywords}
     keywords = [s.lower() for s in keywords]
     speech_to_text = SpeechStream(RATE, CHUNK, keywords)
@@ -42,10 +42,11 @@ def main():
         speech_to_text.get_keywords()
         keyword = speech_to_text.get_current_keyword()
         if keyword == keywords[0] and not keyword_used[keyword]:
-            cam.switch_to_response()
+            cam.switch_to_here()
             keyword_used[keyword] = True
             print('Totally listening to you!')
         elif keyword == keywords[1] and not keyword_used[keyword]:
+            cam.switch_to_yes()
             keyword_used[keyword] = True
             print('Hello efforts!')
         elif keyword == keywords[2] and not keyword_used[keyword]:

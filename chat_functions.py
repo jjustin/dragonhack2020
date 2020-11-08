@@ -29,7 +29,7 @@ def chat_bot(driver):
     
     if len(chats) > 0:
         # get the word that repeated specified number of times
-        text = repeated_chat(chats, 3)
+        text = repeated_chat(chats, 2)
 
         if text and text not in sent:
             print("Found >=3 chats")

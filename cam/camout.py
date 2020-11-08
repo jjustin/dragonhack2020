@@ -9,14 +9,16 @@ import asyncio
 import websockets
 import random
 
-frame_time = 1/30
+frame_time = 1/12
 app = Flask(__name__)
 commonVideo = []
 yesVideo = []
+hereVideo = []
 
+oldFrameNum = 0
 currentVideo = commonVideo
 frameNum = 1
-ws_switch = False
+ws_switch = ""
 inc = True
 is_off = False
 
@@ -44,9 +46,9 @@ def gen_frames():
                b'Content-Type: image/jpeg\r\n\r\n' + get_next_frame() + b'\r\n')  # concat frame one by one and show result
         if is_off:
             yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + bytearray() + b'\r\n')  # concat frame one by one and show result
+                   b'Content-Type: image/jpeg\r\n\r\n' + bytearray() + b'\r\n')  # concat frame one by one and show result
             is_off = False
-            currentVideo  = commonVideo
+            currentVideo = commonVideo
             return ""
 
 
@@ -54,7 +56,7 @@ def get_next_frame():
     global frameNum
     if is_off:
         return bytearray()
-    if (currentVideo == commonVideo):
+    if (currentVideo == commonVideo or currentVideo == hereVideo):
         out = currentVideo[frameNum]
         inc_frame_num()
         return out
@@ -80,11 +82,18 @@ def get_next_frame():
 def inc_frame_num():
     global inc
     global frameNum
+    global oldFrameNum
     global is_off
+    global currentVideo
+    global commonVideo
     if inc:
         frameNum = frameNum + 1
 
         if frameNum >= len(currentVideo) - 4:
+            if currentVideo == hereVideo:
+                frameNum = oldFrameNum
+                currentVideo == commonVideo
+                return 
             if currentVideo != commonVideo:
                 is_off = True
                 print("sleepy boi")
@@ -97,21 +106,36 @@ def inc_frame_num():
             inc = True
 
 
-@ app.route('/switch')
-def switch_to_response():
+@ app.route('/yes')
+def switch_to_yes():
     global currentVideo
     global frameNum
     global ws_switch
     currentVideo = yesVideo
     frameNum = 1
-    ws_switch = True
+    ws_switch = "yes"
     return Response()
+
+
+
+
+@ app.route('/here')
+def switch_to_here():
+    global currentVideo
+    global frameNum
+    global ws_switch
+    global oldFrameNum
+    oldFrameNum = frameNum
+    currentVideo = hereVideo
+    frameNum = 1
+    ws_switch = "here"
+    return Response()
+
 
 @app.route("/off")
 def off():
     global is_off
     is_off = True
-
 
 
 @ app.route('/vid')
@@ -139,8 +163,8 @@ async def echo(websocket, path):
     print("WS connected")
     while True:
         if (ws_switch):
-            await websocket.send("switch")
-            ws_switch = False
+            await websocket.send(ws_switch)
+            ws_switch = ""
         time.sleep(0.1)
 
 
@@ -161,6 +185,11 @@ def start():
     # process respond message
     t = threading.Thread(target=process_file, args=(
         "videos/test.mp4", yesVideo))
+    t.start()
+
+    # process respond message
+    t = threading.Thread(target=process_file, args=(
+        "videos/here.mp4", hereVideo))
     t.start()
 
     t = threading.Thread(target=start_ws)
