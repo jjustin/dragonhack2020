@@ -86,14 +86,15 @@ def inc_frame_num():
     global is_off
     global currentVideo
     global commonVideo
+
     if inc:
         frameNum = frameNum + 1
 
         if frameNum >= len(currentVideo) - 4:
             if currentVideo == hereVideo:
                 frameNum = oldFrameNum
-                currentVideo == commonVideo
-                return 
+                currentVideo = commonVideo
+                return
             if currentVideo != commonVideo:
                 is_off = True
                 print("sleepy boi")
@@ -115,8 +116,6 @@ def switch_to_yes():
     frameNum = 1
     ws_switch = "yes"
     return Response()
-
-
 
 
 @ app.route('/here')
