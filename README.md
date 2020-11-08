@@ -1,7 +1,8 @@
 # Totally Listening To You (TLTY.py for short)
 
 ## Presented to you by **Trivial Group**
-***
+[![Presentation video](https://img.youtube.com/vi/Ht90ZI_3348/0.jpg)](https://www.youtube.com/watch?v=Ht90ZI_3348)
+
 
 ## Features
 
